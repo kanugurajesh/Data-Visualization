@@ -19,9 +19,6 @@
       ;
     }
 
-    .country-label {
-      /* display: none; */
-    }
   </style>
   <title>Document</title>
 </head>
@@ -54,7 +51,7 @@
       let array = [];
       g.selectAll('path').data(countries.features)
         .enter().append('path').attr('class', 'country').attr('d', path)
-        
+
       // this is the thing i want
       let arr = document.getElementsByClassName('country');
 
@@ -65,10 +62,7 @@
       Array.from(arr).forEach((country) => {
         country.innerHTML = array[i];
         i++;
-      })
-
-      
-      // First loop to modify the innerHTML of each element in arr
+      });
     });
 </script>
 
