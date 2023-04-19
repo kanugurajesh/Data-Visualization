@@ -50,6 +50,15 @@ def example():
             values.add(doc[result])
     return jsonify(list(values))
 
+
+@app.route('/submit', methods=['POST'])
+@cross_origin()
+def submit():
+    results = request.get_json()
+    result = results["data"]
+    print(result)
+    return 'success';
+
 # run the app
 if __name__ == '__main__':
     app.run(debug=True)

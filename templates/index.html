@@ -38,8 +38,6 @@
     </div>
     <div class="container1">
         <div id="header"></div>
-        <div id="content"></div>
-        <div id="remover"></div>
     </div>
 </body>
 
@@ -106,6 +104,36 @@
 
         i++;
     });
+
+    document.getElementById("button2").addEventListener("click",function () {
+        // get all the data from the divs
+        // let divs = document.querySelectorAll(".container1 div");
+        let div = document.getElementById("header");
+
+        let divs = div.querySelectorAll("div");
+        // create an array to store the data
+
+        let arr = [];
+
+        for (let i = 0; i < divs.length; i++) {
+            let data = divs[i].innerText;
+            arr.push(data.slice(0,-6));
+        }
+
+        // send the data to the api
+
+        fetch("https://alexanderwar-animated-yodel-9vj4g9w5447377qx-5000.preview.app.github.dev/submit", {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ data: arr })
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                console.log(data);
+            })
+    })
 
 </script>
 
