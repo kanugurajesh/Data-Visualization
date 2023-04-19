@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    .container {
+        display: flex;
+    }
+
+    select {
+        width: 500px;
+        height: 50px;
+    }
+
+    button {
+        width: 100px;
+        height: 50px;
+    }
+</style>
+
+<body>
+    <div class="container">
+        <div class="select">
+            <select id="select1">
+            </select>
+        </div>
+        <div class="select1">
+            <select id="select2">
+            </select>
+        </div>
+        <button id="button1">add</button>
+        <button id="button2">submit</button>
+    </div>
+    <div class="container1">
+        <div id="header"></div>
+        <div id="content"></div>
+        <div id="remover"></div>
+    </div>
+</body>
+
+<script>
+    let i = 0;
+    fetch("https://alexanderwar-animated-yodel-9vj4g9w5447377qx-5000.preview.app.github.dev/key_data")
+        .then((response) => response.json())
+        .then((data) => {
+            let select1 = document.getElementById("select1");
+            for (let i = 0; i < data.length; i++) {
+                let option = document.createElement("option");
+                option.value = data[i];
+                option.text = data[i];
+                select1.appendChild(option);
+            }
+        })
+
+    // when a value is selected in select1, fetch the data from the api and populate select2
+    let select2 = document.getElementById("select2");
+
+    document.getElementById("select1").addEventListener("change", function () {
+        let value = this.value;
+        fetch("https://alexanderwar-animated-yodel-9vj4g9w5447377qx-5000.preview.app.github.dev/data", {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ selectedValue: value })
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                select2.innerHTML = "";
+                for (let i = 0; i < data.length; i++) {
+                    let option = document.createElement("option");
+                    option.value = data[i];
+                    option.text = data[i];
+                    select2.appendChild(option);
+                }
+            })
+    })
+
+    document.getElementById("button1").addEventListener("click", function () {
+        console.log(1);
+
+        let results = document.getElementById("select1").value;
+        let results1 = document.getElementById("select2").value;
+
+        // create a div and append the above data to it
+        let createDiv = document.createElement("div");
+        createDiv.classList.add("myDiv" + i);
+        createDiv.innerHTML = results + ":" + results1;
+
+        document.getElementById("header").appendChild(createDiv);
+
+        // create a button and append it to the div
+        let removeButton = document.createElement("button");
+        removeButton.innerText = "Remove";
+        createDiv.appendChild(removeButton);
+
+        // when clicked on, remove the above data
+        removeButton.addEventListener("click", function () {
+            createDiv.remove();
+        });
+
+        i++;
+    });
+
+</script>
+
+</html>
