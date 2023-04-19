@@ -43,7 +43,11 @@
 
 <script>
     let i = 0;
-    fetch("https://alexanderwar-animated-yodel-9vj4g9w5447377qx-5000.preview.app.github.dev/key_data")
+    let mySet = new Set();
+    // console.log(window.location.href);
+    let url = window.location.href;
+    // fetch("https://alexanderwar-animated-yodel-9vj4g9w5447377qx-5000.preview.app.github.dev/key_data")
+    fetch(url+"key_data")
         .then((response) => response.json())
         .then((data) => {
             let select1 = document.getElementById("select1");
@@ -60,7 +64,8 @@
 
     document.getElementById("select1").addEventListener("change", function () {
         let value = this.value;
-        fetch("https://alexanderwar-animated-yodel-9vj4g9w5447377qx-5000.preview.app.github.dev/data", {
+        // fetch("https://alexanderwar-animated-yodel-9vj4g9w5447377qx-5000.preview.app.github.dev/data", {
+        fetch(url+"data", {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -114,15 +119,20 @@
         // create an array to store the data
 
         let arr = [];
+        // let arr = new Set();
 
         for (let i = 0; i < divs.length; i++) {
             let data = divs[i].innerText;
             arr.push(data.slice(0,-6));
+            // arr.add(data.slice(0,-6));
         }
+
+        arr = [...new Set(arr)]
 
         // send the data to the api
 
-        fetch("https://alexanderwar-animated-yodel-9vj4g9w5447377qx-5000.preview.app.github.dev/submit", {
+        // fetch("https://alexanderwar-animated-yodel-9vj4g9w5447377qx-5000.preview.app.github.dev/submit", {
+        fetch(url+"submit", {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
