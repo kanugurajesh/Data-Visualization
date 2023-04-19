@@ -4,10 +4,6 @@ import json
 # Connect to MongoDB inside the Docker container
 client = pymongo.MongoClient("mongodb://localhost:27017/")
 
-# Load JSON data from file
-with open("jsondata.json") as f:
-    data = json.load(f)
-
 # Insert data into MongoDB collection
 db = client["mydatabase"]
 collection = db["mycollection"]
@@ -16,12 +12,7 @@ collection = db["mycollection"]
 # Print the number of documents in the collection
 # print(f"{collection.count_documents({})} documents in collection")
 
-results = collection.find({"sector":"Energy"})
+results = collection.find_one({})
 
-i = 0
-
-for result in results:
-    i += 1
-    print(result)
-
-print(i)
+for key, value in results.items():
+    print(key,type(value))
