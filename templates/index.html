@@ -33,6 +33,13 @@
             <select id="select2">
             </select>
         </div>
+        <div class="sender">
+            <select name="" id="sender">
+                <option value="day">day</option>
+                <option value="month">month</option>
+                <option value="year">year</option>
+            </select>
+        </div>
         <button id="button1">add</button>
         <button id="button2">submit</button>
     </div>
@@ -47,7 +54,7 @@
     // console.log(window.location.href);
     let url = window.location.href;
     // fetch("https://alexanderwar-animated-yodel-9vj4g9w5447377qx-5000.preview.app.github.dev/key_data")
-    fetch(url+"key_data")
+    fetch(url + "key_data")
         .then((response) => response.json())
         .then((data) => {
             let select1 = document.getElementById("select1");
@@ -65,7 +72,7 @@
     document.getElementById("select1").addEventListener("change", function () {
         let value = this.value;
         // fetch("https://alexanderwar-animated-yodel-9vj4g9w5447377qx-5000.preview.app.github.dev/data", {
-        fetch(url+"data", {
+        fetch(url + "data", {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -110,7 +117,7 @@
         i++;
     });
 
-    document.getElementById("button2").addEventListener("click",function () {
+    document.getElementById("button2").addEventListener("click", function () {
         // get all the data from the divs
         // let divs = document.querySelectorAll(".container1 div");
         let div = document.getElementById("header");
@@ -123,7 +130,7 @@
 
         for (let i = 0; i < divs.length; i++) {
             let data = divs[i].innerText;
-            arr.push(data.slice(0,-6));
+            arr.push(data.slice(0, -6));
             // arr.add(data.slice(0,-6));
         }
 
@@ -132,7 +139,7 @@
         // send the data to the api
 
         // fetch("https://alexanderwar-animated-yodel-9vj4g9w5447377qx-5000.preview.app.github.dev/submit", {
-        fetch(url+"submit", {
+        fetch(url + "submit", {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
