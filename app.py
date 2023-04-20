@@ -56,8 +56,27 @@ def example():
 def submit():
     results = request.get_json()
     result = results["data"]
+    
     print(result)
-    return 'success';
+    
+    query = {}
+
+    for elem in result:
+        key,value = elem.split(":")
+        query[key] = value
+
+    print(query)
+    
+    results = list(collection.find(query))
+
+    print(results,1)
+
+    for doc in results:
+        doc["_id"] = str(doc["_id"])
+
+    print(results)
+
+    return jsonify(results)
 
 # run the app
 if __name__ == '__main__':
