@@ -5,15 +5,15 @@ fetch('https://alexanderwar-animated-yodel-9vj4g9w5447377qx-5000.preview.app.git
 
 let k = 0;
 
-console.log(window.location.href)
+// console.log(window.location.href)
 
-const width = 950;
-const height = 850;
+const width = 1600;
+const height = 1000;
 
 const svg = d3.select('#map').append('svg').attr('width', width).attr('height', height);
 
 const g = svg.append('g');
-const projection = d3.geoMercator().scale(150)
+const projection = d3.geoMercator().scale(190)
 .translate([width / 2, height / 2]);
 const path = d3.geoPath(projection);
 

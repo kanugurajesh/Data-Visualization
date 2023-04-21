@@ -17,6 +17,8 @@ key = documents[0].keys()
 # convert ObjectId values to strings
 for doc in documents:
     doc["_id"] = str(doc["_id"])
+
+
 @app.route('/')
 @cross_origin()
 def index():
@@ -27,12 +29,14 @@ def index():
 #     # return a list of all the documents in the collection
 #     return jsonify(documents)
 
+
 @app.route('/key_data')
 @cross_origin()
 def hello():
     return jsonify(list(key))
 
-@app.route('/data', methods=['POST','GET'])
+
+@app.route('/data', methods=['POST', 'GET'])
 @cross_origin()
 def examples():
     values = set()
@@ -64,7 +68,7 @@ def submited():
     queries = []
 
     for elem in result:
-        key, value = elem.split(":")
+        key, value = elem.split(":", 1)
         query[key] = value
         queries.append(query)
         query = {}
@@ -107,11 +111,12 @@ def submited():
             intensity += doc["intensity"]
             likelihood += doc["likelihood"]
         count = sales["count"]
-        sender["relevance"] = relevance
-        sender["impact"] = impact
-        sender["intensity"] = intensity
-        sender["likelihood"] = likelihood
+        sender["relevance"] = int(relevance/count)
+        sender["impact"] = int(impact/count)
+        sender["intensity"] = int(intensity/count)
+        sender["likelihood"] = int(likelihood/count)
         sender["count"] = count
+        sender["date"] = sales["_id"]
         result_string[sales["_id"]] = sender
         sender = {}
         relevance = 0
@@ -120,7 +125,10 @@ def submited():
         likelihood = 0
         count = 0
 
+    # print(sender,99)
+    print(result_string)
     return result_string
+
 # run the app
 if __name__ == '__main__':
     app.run(debug=True)
