@@ -3,12 +3,12 @@ fetch('https://alexanderwar-animated-yodel-9vj4g9w5447377qx-5000.preview.app.git
 .then(response => response.json())
 .then(data => console.log(data));
 
-let i = 0;
+let k = 0;
 
 console.log(window.location.href)
 
 const width = 950;
-const height = 900;
+const height = 850;
 
 const svg = d3.select('#map').append('svg').attr('width', width).attr('height', height);
 
@@ -46,8 +46,8 @@ d3.json("https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json")
         array.push(country.properties.name);
     })
     Array.from(arr).forEach((country) => {
-        country.innerHTML = array[i];
-        i++;
+        country.innerHTML = array[k];
+        k++;
     });
     Array.from(arr).forEach((country) => {
         country.addEventListener('mouseover', (e) => {
