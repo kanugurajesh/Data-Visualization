@@ -98,7 +98,6 @@ document.getElementById("button2").addEventListener("click", function () {
     })
         .then((response) => response.json())
         .then((result) => {
-            console.log(result)
             // console.log(data);
             // convert json object to array
             let data = Object.values(result);
