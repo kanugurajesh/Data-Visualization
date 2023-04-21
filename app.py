@@ -1,8 +1,6 @@
 import pymongo
-from flask import Flask, jsonify, render_template,request
+from flask import Flask, jsonify, render_template, request
 from flask_cors import CORS, cross_origin
-from bson import ObjectId
-import json
 
 app = Flask(__name__)
 cors = CORS(app, resources={r"/*": {"origins": "*"}})
@@ -12,7 +10,6 @@ client = pymongo.MongoClient("mongodb://localhost:27017/")
 
 # get a reference to the database
 db = client["mydatabase"]
-
 # get a reference to the collection
 collection = db["mycollection"]
 
@@ -21,22 +18,22 @@ documents = list(collection.find({}))
 
 key = documents[0].keys()
 
-# retrive a single document from the collection
-
 # convert ObjectId values to strings
 for doc in documents:
     doc["_id"] = str(doc["_id"])
+
 
 @app.route('/')
 @cross_origin()
 def index():
     return render_template('index.html')
 
-# send the keys to the client
+
 @app.route('/key_data')
 @cross_origin()
 def hello():
     return jsonify(list(key))
+
 
 @app.route('/data', methods=['POST'])
 @cross_origin()
@@ -56,27 +53,77 @@ def example():
 def submit():
     results = request.get_json()
     result = results["data"]
-    
-    print(result)
-    
+    option = results["option"]
+    string_data = ""
+
+    if option == "month":
+        string_data = "%Y-%m"
+    elif option == "year":
+        string_data = "%Y"
+    elif option == "day":
+        string_data = "%Y-%m-%d"
+
     query = {}
-
+    queries = []
     for elem in result:
-        key,value = elem.split(":")
+        key, value = elem.split(":")
         query[key] = value
+        # add the above query to data list
+        queries.append(query)
+        query = {}
 
-    print(query)
-    
-    results = list(collection.find(query))
+    pipeline = [
+        {'$match': {"$and": queries}},
+        {
+            '$group': {
+                '_id': {
+                    '$dateToString': {
+                        'format': string_data,
+                        'date': {
+                            '$toDate': {
+                                '$multiply': ['$epoch', 1000]
+                            }
+                        }
+                    }
+                },
+                'count': {'$sum': 1},
+                'documents': {'$push': '$$ROOT'}
+            }
+        }
+    ]
 
-    print(results,1)
+    result_string = {}
 
-    for doc in results:
-        doc["_id"] = str(doc["_id"])
+    relevance = 0
+    impact = 0
+    intensity = 0
+    likelihood = 0
+    count = 0
 
-    print(results)
+    sender = {}
 
-    return jsonify(results)
+    for sales in collection.aggregate(pipeline):
+        print(sales)
+        for doc in sales["documents"]:
+            relevance += doc["relevance"]
+            impact += doc["impact"]
+            intensity += doc["intensity"]
+            likelihood += doc["likelihood"]
+        count = sales["count"]
+        sender["relevance"] = relevance
+        sender["impact"] = impact
+        sender["intensity"] = intensity
+        sender["likelihood"] = likelihood
+        sender["count"] = count
+        result_string[sales["_id"]] = sender
+        sender = {}
+        relevance = 0
+        impact = 0
+        intensity = 0
+        likelihood = 0
+        count = 0
+
+    return result_string
 
 # run the app
 if __name__ == '__main__':

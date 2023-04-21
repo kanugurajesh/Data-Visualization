@@ -51,6 +51,7 @@
 <script>
     let i = 0;
     let mySet = new Set();
+    let option_send;
     // console.log(window.location.href);
     let url = window.location.href;
     // fetch("https://alexanderwar-animated-yodel-9vj4g9w5447377qx-5000.preview.app.github.dev/key_data")
@@ -117,6 +118,12 @@
         i++;
     });
 
+    // know which option is selected in the select menu
+
+    // document.getElementById("sender").addEventListener("change", function () {
+    //     option_send = this.value;
+    // })
+
     document.getElementById("button2").addEventListener("click", function () {
         // get all the data from the divs
         // let divs = document.querySelectorAll(".container1 div");
@@ -138,13 +145,16 @@
 
         // send the data to the api
 
+        const senderDropdown = document.getElementById('sender');
+        const selectedSender = senderDropdown.options[senderDropdown.selectedIndex].value;
+
         // fetch("https://alexanderwar-animated-yodel-9vj4g9w5447377qx-5000.preview.app.github.dev/submit", {
         fetch(url + "submit", {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ data: arr })
+            body: JSON.stringify({ data: arr, option: selectedSender })
         })
             .then((response) => response.json())
             .then((data) => {

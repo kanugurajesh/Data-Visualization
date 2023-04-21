@@ -28,28 +28,30 @@ collection = db['mycollection']
 
 queries = [{"country":"India"},{"pestle": "Industries"}]
 
-pipeline = [
-    # Filter documents that match any of the queries
-    # {'$match': {"country":"India"}},
-    {'$match': {"$and": queries}},
-    # Group documents by year and month
-    {
-        '$group': {
-            '_id': {
-                '$dateToString': {
-                    'format': '%Y-%m',
-                    'date': {
-                        '$toDate': {
-                            '$multiply': ['$epoch', 1000]
-                        }
-                    }
-                }
-            },
-            'count': {'$sum': 1},
-            'documents': {'$push': '$$ROOT'}
-        }
-    }
-]
+# pipeline = [
+#     # Filter documents that match any of the queries
+#     # {'$match': {"country":"India"}},
+#     {'$match': {"$and": queries}},
+#     # Group documents by year and month
+#     {
+#         '$group': {
+#             '_id': {
+#                 '$dateToString': {
+#                     'format': '%Y-%m',
+#                     'date': {
+#                         '$toDate': {
+#                             '$multiply': ['$epoch', 1000]
+#                         }
+#                     }
+#                 }
+#             },
+#             'count': {'$sum': 1},
+#             'documents': {'$push': '$$ROOT'}
+#         }
+#     }
+# ]
+
+pipeline = [{'$match': {'$and': [{'country': 'United States of America'}]}}, {'$group': {'_id': {'$dateToString': {'format': '%Y-%m-%d', 'date': {'$toDate': {'$multiply': ['$epoch', 1000]}}}}, 'count': {'$sum': 1}, 'documents': {'$push': '$$ROOT'}}}]
 
 results = collection.aggregate(pipeline)
 
