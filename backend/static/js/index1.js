@@ -210,8 +210,8 @@ document.getElementById("button2").addEventListener("click", function () {
 
             // Set the dimensions and margins of the graph
             var margin = { top: 200, right: 80, bottom: 30, left: 50 },
-                width = 960 - margin.left - margin.right,
-                height = 500 - margin.top - margin.bottom;
+                width = 1800 - margin.left - margin.right,
+                height = 700 - margin.top - margin.bottom;
 
             // Set the ranges
             var x = d3.scaleBand().range([0, width]).padding(0.1);
@@ -274,14 +274,16 @@ document.getElementById("button2").addEventListener("click", function () {
             svg.append("path")
                 .datum(data)
                 .attr("class", "line")
-                .style("stroke", " blue")
+                .style("stroke", " red")
+                .attr("stroke-width",2)
                 .attr("d", countLine);
 
             // Add the impact line
             svg.append("path")
                 .datum(data)
                 .attr("class", "line")
-                .style("stroke", "red")
+                .style("stroke", "blue")
+                .attr("stroke-width",2)
                 .attr("d", impactLine);
 
             // Add the intensity line
@@ -289,13 +291,15 @@ document.getElementById("button2").addEventListener("click", function () {
                 .datum(data)
                 .attr("class", "line")
                 .style("stroke", "green")
+                .attr("stroke-width",2)
                 .attr("d", intensityLine);
 
             // Add the likelihood line
             svg.append("path")
                 .datum(data)
                 .attr("class", "line")
-                .style("stroke", "orange")
+                .style("stroke", "yellow")
+                .attr("stroke-width",2)
                 .attr("d", likelihoodLine);
 
             // Add the relevance line
@@ -303,7 +307,8 @@ document.getElementById("button2").addEventListener("click", function () {
             svg.append("path")
                 .datum(data)
                 .attr("class", "line")
-                .style("stroke", "black")
+                .style("stroke", "orange")
+                .attr("stroke-width",2)
                 .attr("d", relevanceLine);
         })
     })
