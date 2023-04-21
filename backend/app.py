@@ -129,6 +129,7 @@ def submited():
     print(result_string)
     return result_string
 
+
 # run the app
 if __name__ == '__main__':
     app.run(debug=True)
