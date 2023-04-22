@@ -103,6 +103,16 @@ document.getElementById("button2").addEventListener("click", function () {
     })
         .then((response) => response.json())
         .then((result) => {
+            let countryDictionary = {};
+
+            fetch("https://cdn.jsdelivr.net/npm/country-flag-emoji-json@2.0.0/dist/index.json")
+                .then(response => response.json())
+                .then(data => {
+                    let length = data.length;
+                    for (let i = 0; i < length; i++) {
+                        countryDictionary[data[i].name] = data[i].emoji;
+                    }
+                })
             console.log(result);
             // convert json object to array
             let data = Object.values(result);
@@ -366,16 +376,20 @@ document.getElementById("button2").addEventListener("click", function () {
 
             // getting the elements with country class
             let resulting = document.getElementsByClassName("country")
+            let emojiList = []
+            let resultingLength = resulting.length
+            let dataLength = data.length
 
             // adding the green class to the elements with the country name
-            for (let i = 0; i < resulting.length; i++) {
-                resulting[i].classList.remove("green")
-                for (let j = 0; j < data.length; j++) {
-                    if (resulting[i].innerHTML == data[j].country) {
-                        resulting[i].classList.add("green")
+            for (let i = 0; i < resultingLength; i++) {
+                let element = resulting[i]
+                element.classList.remove("green")
+                for (let j = 0; j < dataLength; j++) {
+                    if (element.innerHTML == data[j].country) {
+                        element.classList.add("green")
+                        emojiList.push(element)
                     }
                 }
             }
-        })
-
+        });
 })
