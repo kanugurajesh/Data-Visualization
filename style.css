@@ -1,9 +1,0 @@
-.country{
-    fill: #ccc;
-    stroke: #fff;
-    stroke-width: 1.5px;
-}
-
-.country:hover{
-    fill: #f00;
-}
