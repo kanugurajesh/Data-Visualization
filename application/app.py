@@ -49,6 +49,8 @@ def index():
     return render_template('index.html')
 
 # define a route that returns the key data
+
+
 @app.route('/key_data')
 @cross_origin()
 def hello():
