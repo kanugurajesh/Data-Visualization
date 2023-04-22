@@ -5,6 +5,19 @@ let i = 0;
 let mySet = new Set();
 let option_send;
 let url = window.location.href;
+let countryDictionary = {};
+
+fetch("https://cdn.jsdelivr.net/npm/country-flag-emoji-json@2.0.0/dist/index.json")
+    .then(response => response.json())
+    .then(data => {
+        let length = data.length;
+        for (let i = 0; i < length; i++) {
+            if(data[i].name == "United States"){
+                data[i].name = "United States of America";
+            }
+            countryDictionary[data[i].name] = data[i].emoji;
+        }
+    })
 
 // fetching the data from the api
 fetch(url + "key_data")
@@ -103,17 +116,7 @@ document.getElementById("button2").addEventListener("click", function () {
     })
         .then((response) => response.json())
         .then((result) => {
-            let countryDictionary = {};
-
-            fetch("https://cdn.jsdelivr.net/npm/country-flag-emoji-json@2.0.0/dist/index.json")
-                .then(response => response.json())
-                .then(data => {
-                    let length = data.length;
-                    for (let i = 0; i < length; i++) {
-                        countryDictionary[data[i].name] = data[i].emoji;
-                    }
-                })
-            console.log(result);
+            // console.log(result);
             // convert json object to array
             let data = Object.values(result);
 
@@ -376,7 +379,11 @@ document.getElementById("button2").addEventListener("click", function () {
 
             // getting the elements with country class
             let resulting = document.getElementsByClassName("country")
-            let emojiList = []
+            // let emojiList = []
+            const mySet = new Set();
+            // create an empty set
+
+            let selector = document.getElementById("data")
             let resultingLength = resulting.length
             let dataLength = data.length
 
@@ -387,9 +394,14 @@ document.getElementById("button2").addEventListener("click", function () {
                 for (let j = 0; j < dataLength; j++) {
                     if (element.innerHTML == data[j].country) {
                         element.classList.add("green")
-                        emojiList.push(element)
+                        mySet.add(element.innerHTML+ " " + countryDictionary[element.innerHTML])
                     }
                 }
+            }
+            for (let item of mySet) {
+                let newDiv = document.createElement("div")
+                newDiv.innerHTML = item
+                selector.appendChild(newDiv)
             }
         });
 })
