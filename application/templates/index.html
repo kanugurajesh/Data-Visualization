@@ -11,12 +11,43 @@
     .mainfile {
         display: flex;
         flex-direction: column;
-        height: 100vh;
+        height: 110vh;
         width: 100vw;
     }
 
     .container {
         display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        align-items: center;
+        height: 10vh;
+        width: 100vw;
+        background-color: #f5f5f5;
+    }
+
+    /* .container1 {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        align-items: center;
+        height: 12vh;
+        width: 100vw;
+        background-color: #f5f5f5;
+        overflow: scroll;
+    } */
+
+    .container1 #header{
+        gap: 10px;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        align-items: center;
+        height: 12vh;
+        width: 100vw;
+        background-color: #f5f5f5;
+        overflow: scroll;
+        overflow-x: scroll;
+        overflow-y: scroll;
     }
 
     select {
@@ -28,15 +59,18 @@
         width: 100px;
         height: 50px;
     }
+
+    /* .changer {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        align-items: center;
+    } */
 </style>
 
 <body>
     <div class="mainfile">
-        <div class="frontapp">
-            <div id="map"></div>
-        </div>
         <div class="backend">
-            <svg></svg>
             <div class="container">
                 <div class="select changer">
                     <select id="select1">
@@ -61,6 +95,9 @@
             </div>
             <div id="chart-container">
             </div>
+        </div>
+        <div class="frontapp">
+            <div id="map"></div>
         </div>
     </div>
 </body>
