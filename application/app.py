@@ -1,9 +1,32 @@
+# This is the main file that contains the Flask application
+
+# importing the necessary dependencies
 import pymongo
 from flask import Flask, jsonify, render_template, request
 from flask_cors import CORS, cross_origin
-# from bson import ObjectId
+import docker
+
+# create an instance of Flask
 app = Flask(__name__)
+# enable CORS
 cors = CORS(app, resources={r"/*": {"origins": "*"}})
+# enable docker
+client = docker.from_env()
+
+# get the container name from the file
+with open("../value.txt", "r") as f:
+    container_name = f.read()
+
+# Replace "container_name" with the name of your container
+container = client.containers.get(container_name)
+
+# start the container if it is not running
+if container.status != "running":
+    container.start()
+    print("Container started")
+else:
+    print("Container already running")
+
 # establish a connection to MongoDB
 client = pymongo.MongoClient("mongodb://localhost:27017/")
 # get a reference to the database
@@ -19,23 +42,20 @@ for doc in documents:
     doc["_id"] = str(doc["_id"])
 
 
+# define a route that returns the index.html file
 @app.route('/')
 @cross_origin()
 def index():
     return render_template('index.html')
-# @app.route('/data')
-# @cross_origin()
-# def example():
-#     # return a list of all the documents in the collection
-#     return jsonify(documents)
 
-
+# define a route that returns the key data
 @app.route('/key_data')
 @cross_origin()
 def hello():
     return jsonify(list(key))
 
 
+# define a route that returns the documents data
 @app.route('/data', methods=['POST', 'GET'])
 @cross_origin()
 def examples():
@@ -57,6 +77,7 @@ def submited():
     option = results["option"]
     string_data = ""
 
+    # assigning the variables
     if option == "month":
         string_data = "%Y-%m"
     elif option == "year":
@@ -64,15 +85,18 @@ def submited():
     elif option == "day":
         string_data = "%Y-%m-%d"
 
+    # declaring the variables
     query = {}
     queries = []
 
+    # splitting the data
     for elem in result:
         key, value = elem.split(":", 1)
         query[key] = value
         queries.append(query)
         query = {}
 
+        # declaring the pipeline to aggregate the data
         pipeline = [
             {'$match': {"$and": queries}},
             {
@@ -93,6 +117,7 @@ def submited():
             }
         ]
 
+    # initializing the variables to zero and empty
     result_string = {}
 
     relevance = 0
@@ -103,6 +128,7 @@ def submited():
 
     sender = {}
 
+    # iterating through the data
     for sales in collection.aggregate(pipeline):
         print(sales)
         for doc in sales["documents"]:
@@ -133,6 +159,6 @@ def submited():
     return result_string
 
 
-# run the app
+# run the app in debug mode
 if __name__ == '__main__':
     app.run(debug=True)

@@ -1,9 +1,12 @@
+// This file is used to add the graph to the page
+
+// initialize the counter
 let i = 0;
 let mySet = new Set();
 let option_send;
-// console.log(window.location.href);
 let url = window.location.href;
-// fetch("https://alexanderwar-animated-yodel-9vj4g9w5447377qx-5000.preview.app.github.dev/key_data")
+
+// fetching the data from the api
 fetch(url + "key_data")
     .then((response) => response.json())
     .then((data) => {
@@ -19,9 +22,9 @@ fetch(url + "key_data")
 // when a value is selected in select1, fetch the data from the api and populate select2
 let select2 = document.getElementById("select2");
 
+// fetching the data from the api when a value is selected in select1
 document.getElementById("select1").addEventListener("change", function () {
     let value = this.value;
-    // fetch("https://alexanderwar-animated-yodel-9vj4g9w5447377qx-5000.preview.app.github.dev/data", {
     fetch(url + "data", {
         method: 'POST',
         headers: {
@@ -41,6 +44,7 @@ document.getElementById("select1").addEventListener("change", function () {
         })
 })
 
+// adding the query to fetch when clicked on add button
 document.getElementById("button1").addEventListener("click", function () {
     let results = document.getElementById("select1").value;
     let results1 = document.getElementById("select2").value;
@@ -64,6 +68,7 @@ document.getElementById("button1").addEventListener("click", function () {
     i++;
 });
 
+// when clicked on submit button, send the data to the api
 document.getElementById("button2").addEventListener("click", function () {
     // get all the data from the divs
     // let divs = document.querySelectorAll(".container1 div");
@@ -207,13 +212,6 @@ document.getElementById("button2").addEventListener("click", function () {
                 .text(function (d) { return d; });
             // })
 
-            // svg.append("g")
-            //     .attr("transform", "translate(0," + height + ")")
-            //     .call(d3.axisBottom(x))
-            //     .selectAll("text")
-            //     .attr("transform", "rotate(-45)")
-            //     .style("text-anchor", "end");
-
             // Set the dimensions and margins of the graph
             var margin = { top: 200, right: 80, bottom: 30, left: 50 },
                 width = 1800 - margin.left - margin.right,
@@ -316,7 +314,6 @@ document.getElementById("button2").addEventListener("click", function () {
                 .attr("stroke-width", 2)
                 .attr("d", relevanceLine);
 
-            // delete
             // Add the count line label
             svg.append("text")
                 .datum(data)
@@ -366,10 +363,11 @@ document.getElementById("button2").addEventListener("click", function () {
                 .style("text-anchor", "middle")
                 .style("fill", "orange")
                 .text("Relevance");
-            // delete
 
+            // getting the elements with country class
             let resulting = document.getElementsByClassName("country")
 
+            // adding the green class to the elements with the country name
             for (let i = 0; i < resulting.length; i++) {
                 resulting[i].classList.remove("green")
                 for (let j = 0; j < data.length; j++) {

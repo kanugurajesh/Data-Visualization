@@ -1,9 +1,12 @@
+# importing the necessary dependencies
 import json
 from datetime import datetime
 
+# open the json file
 with open('jsondata.json') as f:
     data = json.load(f)
 
+# convert the date string to epoch time
 for item in data:
     date_string = item["added"]
     if(item["relevance"]==""):
@@ -18,5 +21,6 @@ for item in data:
     epoch_time = int(datetime_obj.timestamp())
     item["epoch"] = epoch_time
 
+# write the data to the json file
 with open('jsondata.json', 'w') as f:
     json.dump(data, f)

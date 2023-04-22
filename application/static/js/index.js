@@ -1,29 +1,34 @@
+// This file is used to create the map and the country labels
 
-// // fetch('https://alexanderwar-animated-yodel-9vj4g9w5447377qx-5000.preview.app.github.dev/data')
-// //     .then(response => response.json())
-// //     .then(data => console.log(data));
-
+// initialize the counter
 let k = 0;
 
-// console.log(window.location.href)
-
+// initialize the dimensions of the map
 const width = 1600;
 const height = 1000;
 
+// create the svg element and append it to the div with id map
 const svg = d3.select('#map').append('svg').attr('width', width).attr('height', height);
 
+// create the g element and append it to the svg element
 const g = svg.append('g');
+
+// create the projection and the path
 const projection = d3.geoMercator().scale(190)
     .translate([width / 2, height / 2]);
 const path = d3.geoPath(projection);
 
+// load the data from the json file
 d3.json("https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json")
     .then(data => {
+        // create the countries variable
         const countries = topojson.feature(data, data.objects.countries);
         let array = [];
+        // create the path for each country
         g.selectAll('path').data(countries.features)
             .enter().append('path').attr('class', 'country').attr('d', path)
 
+        // create the country labels
         g.selectAll("text")
             .data(countries.features)
             .enter()
@@ -40,8 +45,10 @@ d3.json("https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json")
             .text(function (d) {
                 return d.properties.name;
             });
+        
+        // creating the array of country class elements
         let arr = document.getElementsByClassName('country');
-
+      
         Array.from(countries.features).forEach((country) => {
             array.push(country.properties.name);
         })
@@ -49,6 +56,8 @@ d3.json("https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json")
             country.innerHTML = array[k];
             k++;
         });
+
+        // adding the event listeners
         Array.from(arr).forEach((country) => {
             country.addEventListener('mouseover', (e) => {
                 document.getElementById(e.target.innerHTML).style.display = "block";
@@ -65,78 +74,3 @@ d3.json("https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json")
             })
         })
     });
-
-// the below code can be deleted
-
-// fetch('https://alexanderwar-animated-yodel-9vj4g9w5447377qx-5000.preview.app.github.dev/data')
-//     .then(response => response.json())
-//     .then(data => console.log(data));
-
-
-// let k = 0;
-
-// // console.log(window.location.href)
-
-// const width = 1600;
-// const height = 1000;
-
-// const svg = d3.select('#map').append('svg').attr('width', width).attr('height', height);
-
-// const g = svg.append('g');
-// const projection = d3.geoMercator().scale(190)
-//     .translate([width / 2, height / 2]);
-// const path = d3.geoPath(projection);
-
-// const targetCountry = "United States of America"; // the country name to target
-
-// d3.json("https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json")
-//     .then(data => {
-//         const countries = topojson.feature(data, data.objects.countries);
-//         let array = [];
-//         g.selectAll('path').data(countries.features)
-//             .enter().append('path')
-//             .attr('class', 'country')
-//             .attr('d', path)
-//             // .style("fill", d => d.properties.name === targetCountry ? "green" : null); // fill country green if name matches targetCountry
-
-//         g.selectAll("text")
-//             .data(countries.features)
-//             .enter()
-//             .append("text")
-//             .attr("class", "country-label")
-//             .attr("style", "display:none")
-//             .attr("id", function (d) {
-//                 return d.properties.name;
-//             })
-//             .attr("transform", function (d) {
-//                 return "translate(" + path.centroid(d) + ")";
-//             })
-//             .attr("dy", ".35em")
-//             .text(function (d) {
-//                 return d.properties.name;
-//             });
-//         let arr = document.getElementsByClassName('country');
-
-//         Array.from(countries.features).forEach((country) => {
-//             array.push(country.properties.name);
-//         })
-//         Array.from(arr).forEach((country) => {
-//             country.innerHTML = array[k];
-//             k++;
-//         });
-//         Array.from(arr).forEach((country) => {
-//             country.addEventListener('mouseover', (e) => {
-//                 document.getElementById(e.target.innerHTML).style.display = "block";
-//             })
-//         })
-//         Array.from(arr).forEach((country) => {
-//             country.addEventListener('mouseout', (e) => {
-//                 document.getElementById(e.target.innerHTML).style.display = "none";
-//             })
-//         })
-//         Array.from(arr).forEach((country) => {
-//             country.addEventListener('click', (e) => {
-//                 console.log(e.target.innerHTML);
-//             })
-//         })
-//     });
