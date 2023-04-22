@@ -1,0 +1,20 @@
+.country {
+    fill: #ccc;
+    stroke: #fff;
+    stroke-width: 1.5px;
+    transition: 1s;
+}
+
+.country:hover {
+    fill: red;
+    scale: 1.005;
+    cursor: pointer;
+}
+
+#chart-container svg{
+    fill: none;
+}
+
+.green {
+    fill:green !important;
+}
