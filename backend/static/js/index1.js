@@ -207,6 +207,13 @@ document.getElementById("button2").addEventListener("click", function () {
                 .text(function (d) { return d; });
             // })
 
+            // svg.append("g")
+            //     .attr("transform", "translate(0," + height + ")")
+            //     .call(d3.axisBottom(x))
+            //     .selectAll("text")
+            //     .attr("transform", "rotate(-45)")
+            //     .style("text-anchor", "end");
+
             // Set the dimensions and margins of the graph
             var margin = { top: 200, right: 80, bottom: 30, left: 50 },
                 width = 1800 - margin.left - margin.right,
@@ -302,7 +309,6 @@ document.getElementById("button2").addEventListener("click", function () {
                 .attr("d", likelihoodLine);
 
             // Add the relevance line
-
             svg.append("path")
                 .datum(data)
                 .attr("class", "line")
@@ -310,12 +316,64 @@ document.getElementById("button2").addEventListener("click", function () {
                 .attr("stroke-width", 2)
                 .attr("d", relevanceLine);
 
+            // delete
+            // Add the count line label
+            svg.append("text")
+                .datum(data)
+                .attr("x", function (d) { return x(d[d.length - 1].date) + x.bandwidth() / 2; })
+                .attr("y", function (d) { return y(d[d.length - 1].count); })
+                .attr("dy", "-0.5em")
+                .style("text-anchor", "middle")
+                .style("fill", "red")
+                .text("Count");
+
+            // Add the impact line label
+            svg.append("text")
+                .datum(data)
+                .attr("x", function (d) { return x(d[d.length - 1].date) + x.bandwidth() / 2; })
+                .attr("y", function (d) { return y(d[d.length - 1].impact); })
+                .attr("dy", "-0.5em")
+                .style("text-anchor", "middle")
+                .style("fill", "blue")
+                .text("Impact");
+
+            // Add the intensity line label
+            svg.append("text")
+                .datum(data)
+                .attr("x", function (d) { return x(d[d.length - 1].date) + x.bandwidth() / 2; })
+                .attr("y", function (d) { return y(d[d.length - 1].intensity); })
+                .attr("dy", "-0.5em")
+                .style("text-anchor", "middle")
+                .style("fill", "green")
+                .text("Intensity");
+
+            // Add the likelihood line label
+            svg.append("text")
+                .datum(data)
+                .attr("x", function (d) { return x(d[d.length - 1].date) + x.bandwidth() / 2; })
+                .attr("y", function (d) { return y(d[d.length - 1].likelihood); })
+                .attr("dy", "-0.5em")
+                .style("text-anchor", "middle")
+                .style("fill", "yellow")
+                .text("Likelihood");
+
+            // Add the relevance line label
+            svg.append("text")
+                .datum(data)
+                .attr("x", function (d) { return x(d[d.length - 1].date) + x.bandwidth() / 2; })
+                .attr("y", function (d) { return y(d[d.length - 1].relevance); })
+                .attr("dy", "-0.5em")
+                .style("text-anchor", "middle")
+                .style("fill", "orange")
+                .text("Relevance");
+            // delete
+
             let resulting = document.getElementsByClassName("country")
 
-            for(let i = 0;i < resulting.length;i++){
+            for (let i = 0; i < resulting.length; i++) {
                 resulting[i].classList.remove("green")
-                for(let j = 0;j < data.length;j++){
-                    if(resulting[i].innerHTML == data[j].country){
+                for (let j = 0; j < data.length; j++) {
+                    if (resulting[i].innerHTML == data[j].country) {
                         resulting[i].classList.add("green")
                     }
                 }
