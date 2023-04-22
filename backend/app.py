@@ -110,6 +110,8 @@ def submited():
             impact += doc["impact"]
             intensity += doc["intensity"]
             likelihood += doc["likelihood"]
+            country = doc["country"]
+
         count = sales["count"]
         sender["relevance"] = int(relevance/count)
         sender["impact"] = int(impact/count)
@@ -117,6 +119,7 @@ def submited():
         sender["likelihood"] = int(likelihood/count)
         sender["count"] = count
         sender["date"] = sales["_id"]
+        sender["country"] = country
         result_string[sales["_id"]] = sender
         sender = {}
         relevance = 0

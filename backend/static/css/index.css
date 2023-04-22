@@ -14,3 +14,7 @@
 #chart-container svg{
     fill: none;
 }
+
+.green {
+    fill:green !important;
+}

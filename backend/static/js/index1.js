@@ -98,7 +98,7 @@ document.getElementById("button2").addEventListener("click", function () {
     })
         .then((response) => response.json())
         .then((result) => {
-            // console.log(data);
+            console.log(result);
             // convert json object to array
             let data = Object.values(result);
 
@@ -187,7 +187,7 @@ document.getElementById("button2").addEventListener("click", function () {
 
             // Add a legend to the chart
             var legend = svg.selectAll(".legend")
-                .data(["count", "impact", "intensity", "likelihood", "relevance"])
+                .data(["count of documents", "average of impact", "average of intensity", "average of likelihood", "average of relevance"])
                 .enter().append("g")
                 .attr("class", "legend")
                 .attr("transform", function (d, i) { return "translate(0," + i * 20 + ")"; });
@@ -274,7 +274,7 @@ document.getElementById("button2").addEventListener("click", function () {
                 .datum(data)
                 .attr("class", "line")
                 .style("stroke", " red")
-                .attr("stroke-width",2)
+                .attr("stroke-width", 2)
                 .attr("d", countLine);
 
             // Add the impact line
@@ -282,7 +282,7 @@ document.getElementById("button2").addEventListener("click", function () {
                 .datum(data)
                 .attr("class", "line")
                 .style("stroke", "blue")
-                .attr("stroke-width",2)
+                .attr("stroke-width", 2)
                 .attr("d", impactLine);
 
             // Add the intensity line
@@ -290,7 +290,7 @@ document.getElementById("button2").addEventListener("click", function () {
                 .datum(data)
                 .attr("class", "line")
                 .style("stroke", "green")
-                .attr("stroke-width",2)
+                .attr("stroke-width", 2)
                 .attr("d", intensityLine);
 
             // Add the likelihood line
@@ -298,7 +298,7 @@ document.getElementById("button2").addEventListener("click", function () {
                 .datum(data)
                 .attr("class", "line")
                 .style("stroke", "yellow")
-                .attr("stroke-width",2)
+                .attr("stroke-width", 2)
                 .attr("d", likelihoodLine);
 
             // Add the relevance line
@@ -307,7 +307,19 @@ document.getElementById("button2").addEventListener("click", function () {
                 .datum(data)
                 .attr("class", "line")
                 .style("stroke", "orange")
-                .attr("stroke-width",2)
+                .attr("stroke-width", 2)
                 .attr("d", relevanceLine);
+
+            let resulting = document.getElementsByClassName("country")
+
+            for(let i = 0;i < resulting.length;i++){
+                resulting[i].classList.remove("green")
+                for(let j = 0;j < data.length;j++){
+                    if(resulting[i].innerHTML == data[j].country){
+                        resulting[i].classList.add("green")
+                    }
+                }
+            }
         })
-    })
+
+})
