@@ -4,8 +4,8 @@
 let k = 0;
 
 // initialize the dimensions of the map
-const width = 1600;
-const height = 1000;
+const width = 1800;
+const height = 1100;
 
 // create the svg element and append it to the div with id map
 const svg = d3.select('#map').append('svg').attr('width', width).attr('height', height);

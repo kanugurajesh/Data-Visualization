@@ -368,14 +368,27 @@ document.getElementById("button2").addEventListener("click", function () {
             let resulting = document.getElementsByClassName("country")
 
             // adding the green class to the elements with the country name
-            for (let i = 0; i < resulting.length; i++) {
-                resulting[i].classList.remove("green")
-                for (let j = 0; j < data.length; j++) {
-                    if (resulting[i].innerHTML == data[j].country) {
-                        resulting[i].classList.add("green")
+            // for (let i = 0; i < resulting.length; i++) {
+            //     resulting[i].classList.remove("green")
+            //     console.log(resulting[i].innerHTML,990)
+            //     for (let j = 0; j < data.length; j++) {
+            //         if (resulting[i].innerHTML == data[j].country) {
+            //             resulting[i].classList.add("green")
+            //         }
+            //     }
+            // }
+
+            const resultingLength = resulting.length;
+            const dataLength = data.length;
+            for (let i = 0; i < resultingLength; i++) {
+                const element = resulting[i];
+                element.classList.remove("green");
+                for (const object of data) {
+                    if (element.innerHTML === object.country) {
+                        element.classList.add("green");
+                        break;
                     }
                 }
             }
         })
-
 })
