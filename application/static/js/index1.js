@@ -12,7 +12,7 @@ fetch("https://cdn.jsdelivr.net/npm/country-flag-emoji-json@2.0.0/dist/index.jso
     .then(data => {
         let length = data.length;
         for (let i = 0; i < length; i++) {
-            if(data[i].name == "United States"){
+            if (data[i].name == "United States") {
                 data[i].name = "United States of America";
             }
             countryDictionary[data[i].name] = data[i].emoji;
@@ -67,12 +67,14 @@ document.getElementById("button1").addEventListener("click", function () {
     createDiv.innerHTML = results + ":" + results1;
 
     document.getElementById("header").appendChild(createDiv);
-
     // create a button and append it to the div
     let removeButton = document.createElement("button");
     removeButton.innerText = "Remove";
+    removeButton.classList.add("removeButton")
     createDiv.appendChild(removeButton);
+    // can be removed
 
+    // can be removed 
     // when clicked on, remove the above data
     removeButton.addEventListener("click", function () {
         createDiv.remove();
@@ -122,8 +124,8 @@ document.getElementById("button2").addEventListener("click", function () {
 
             // Define the dimensions of the chart
             var margin = { top: 20, right: 20, bottom: 30, left: 40 },
-                width = 1800 - margin.left - margin.right,
-                height = 700 - margin.top - margin.bottom;
+                width = 1850 - margin.left - margin.right,
+                height = 1000 - margin.top - margin.bottom;
             // d3.select("div.backend svg").remove();
             d3.select("div.backend").selectAll("svg").remove();
             d3.select("div.backend").append("svg");
@@ -223,6 +225,21 @@ document.getElementById("button2").addEventListener("click", function () {
                 .attr("dy", ".35em")
                 .style("text-anchor", "end")
                 .text(function (d) { return d; });
+
+            // delete the below code
+            svg.append("text")
+                .attr("x", width / 2)
+                .attr("y", height + margin.bottom)
+                .attr("text-anchor", "middle")
+                .text("Dates");
+
+            svg.append("text")
+                .attr("transform", "rotate(-90)")
+                .attr("x", 0 - height / 2)
+                .attr("y", 0 - margin.left + 15)
+                .attr("text-anchor", "middle")
+                .text("number");
+            // delete the above code
             // })
 
             // Set the dimensions and margins of the graph
@@ -394,10 +411,16 @@ document.getElementById("button2").addEventListener("click", function () {
                 for (let j = 0; j < dataLength; j++) {
                     if (element.innerHTML == data[j].country) {
                         element.classList.add("green")
-                        mySet.add(element.innerHTML+ " " + countryDictionary[element.innerHTML])
+                        mySet.add(element.innerHTML + " " + countryDictionary[element.innerHTML])
                     }
                 }
             }
+            
+            // delete the divs of the selector
+            while (selector.firstChild) {
+                selector.removeChild(selector.firstChild);
+            }
+
             for (let item of mySet) {
                 let newDiv = document.createElement("div")
                 newDiv.innerHTML = item
