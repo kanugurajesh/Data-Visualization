@@ -7,6 +7,12 @@ This project is developed on github codespaces i would recommend you to choose t
 (or)
 python installed,docker installed.
 
+## Project setup on code spaces
+
+1. Go to the my repository create a new codespace there.
+2. Then install docker in it python will be installed automatically.
+3. Your setup is completed.
+
 ## Project Setup on linux
 
 1. First install all the python modules by the command <code>pip install -r requirements.txt</code>.
@@ -18,5 +24,9 @@ python installed,docker installed.
 
 ## Project Usage Steps
 
-1. when you run the app.py file a link will be generated open the link then you will be taken to the dashboard.There you will be finding the world map.
-2.
+1. when you run the app.py file a link will be generated open the link then you will be taken to the dashboard.
+2. On the top of the dashboard you will be finding select and buttons in the first select element it contains all the key values of the json file and you need to select one.
+3. when you select the element from the select element then in the next select element all the values of the key in json files are loaded then you can select one of them 
+4. Then you need to select in which format you want the data for e.g Do you want it  day wise,month wise or year wise you can select it from the third seelct element.
+5. Then press on add button which adds to the dictionary using this button you can perform multiple queries
+6 Then click on submit which sends the queries to the database to qeury and the data is displayed on the graph
