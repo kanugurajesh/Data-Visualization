@@ -124,7 +124,7 @@ document.getElementById("button2").addEventListener("click", function () {
 
             // Define the dimensions of the chart
             var margin = { top: 20, right: 20, bottom: 30, left: 40 },
-                width = 1850 - margin.left - margin.right,
+                width = 1900 - margin.left - margin.right,
                 height = 1000 - margin.top - margin.bottom;
             // d3.select("div.backend svg").remove();
             d3.select("div.backend").selectAll("svg").remove();

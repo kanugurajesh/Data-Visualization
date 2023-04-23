@@ -5,7 +5,7 @@ let k = 0;
 
 // initialize the dimensions of the map
 const width = 1700;
-const height = 900;
+const height = 1100;
 
 // create the svg element and append it to the div with id map
 const svg = d3.select('#map').append('svg').attr('width', width).attr('height', height);
@@ -15,7 +15,7 @@ const g = svg.append('g');
 
 // create the projection and the path
 const projection = d3.geoMercator().scale(180)
-    .translate([width / 2, height / 1.8]);
+    .translate([width / 2, height / 1.9]);
 const path = d3.geoPath(projection);
 
 // load the data from the json file
@@ -73,4 +73,17 @@ d3.json("https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json")
                 console.log(e.target.innerHTML);
             })
         })
+        svg.append("rect")
+            .attr("x", 10)
+            .attr("y", 150)
+            .attr("width", 20)
+            .attr("height", 20)
+            .style("fill", "green");
+
+        svg.append("text")
+            .attr("x", 35)
+            .attr("y", 170)
+            .attr("class", "legend")
+            .text("Selected Countries");
+
     });
